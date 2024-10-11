@@ -17,12 +17,17 @@ export default function MoodCard({ mood, handleDelete }) {
       >
         <Card variant="soft">
           <CardContent>
-            <Typography level="title-md">{mood.createdAt}</Typography>
+            <Typography level="title-md">{new Date(mood.createdAt).toLocaleString()}</Typography>
             <Typography><strong>Rating: </strong>{mood.rating}</Typography>
-            <Typography><strong>Emotion: </strong>{mood.emotion}</Typography>
-            <button onClick={handleDelete}>delete</button>
+            <Typography>
+              <strong>Emotions: </strong>
+              {mood.emotions.length > 0 ? mood.emotions.join(', ') : 'No emotions selected'}
+            </Typography>
+            <Typography><strong>Hours Slept: </strong>{mood.hoursSlept || 'N/A'}</Typography>
+            <Typography><strong>Note: </strong>{mood.note || 'No notes provided'}</Typography>
+            <button onClick={handleDelete}>Delete</button>
           </CardContent>
         </Card>
       </Box>
     );
-  }
+}

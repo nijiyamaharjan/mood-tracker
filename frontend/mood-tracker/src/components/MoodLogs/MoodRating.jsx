@@ -1,9 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Button, Box, Typography } from '@mui/material';
 
-export default function MoodSelector() {
-  const [selectedMood, setSelectedMood] = useState(null);
-
+export default function MoodRating({ selectedMood, onRatingChange }) {
   const moodLevels = [
     { mood: 'Very Happy', emoji: '😄' },
     { mood: 'Happy', emoji: '😊' },
@@ -13,7 +11,7 @@ export default function MoodSelector() {
   ];
 
   const handleMoodClick = (mood) => {
-    setSelectedMood(mood);
+    onRatingChange(mood);
   };
 
   return (
@@ -39,12 +37,6 @@ export default function MoodSelector() {
           </Button>
         ))}
       </Box>
-
-      {/* {selectedMood && (
-        <Typography variant="h6" sx={{ mt: 2 }}>
-          You are feeling: {selectedMood}
-        </Typography>
-      )} */}
     </Box>
   );
 }

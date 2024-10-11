@@ -1,30 +1,17 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Button, Box, Typography } from '@mui/material';
 
-export default function Emotions() {
-  const [selectedEmotions, setSelectedEmotions] = useState([]); // Change to an array
-
+export default function Emotions({ selectedEmotions, onEmotionsChange }) {
   const emotions = [
-    'happy', 
-    'excited', 
-    'grateful', 
-    'relaxed', 
-    'content', 
-    'tired', 
-    'unsure', 
-    'bored', 
-    'anxious', 
-    'angry', 
-    'stressed', 
-    'sad'
+    'happy', 'excited', 'grateful', 'relaxed', 'content', 'tired',
+    'unsure', 'bored', 'anxious', 'angry', 'stressed', 'sad'
   ];
 
   const handleEmotionClick = (emotion) => {
-    setSelectedEmotions((prev) => 
-      prev.includes(emotion) 
-        ? prev.filter((e) => e !== emotion) // Remove emotion if already selected
-        : [...prev, emotion] // Add emotion if not selected
-    );
+    const newEmotions = selectedEmotions.includes(emotion)
+      ? selectedEmotions.filter((e) => e !== emotion)
+      : [...selectedEmotions, emotion];
+    onEmotionsChange(newEmotions);
   };
 
   return (
@@ -50,13 +37,6 @@ export default function Emotions() {
           </Button>
         ))}
       </Box>
-
-      {/* Display selected emotions if any */}
-      {selectedEmotions.length > 0 && (
-        <Typography variant="h6" sx={{ mt: 2 }}>
-          You are feeling: {selectedEmotions.join(', ')}
-        </Typography>
-      )}
     </Box>
   );
 }

@@ -1,13 +1,9 @@
-import React, { useState } from 'react';
-import { Button, Box, Typography, TextField } from '@mui/material';
+import React from 'react';
+import { Box, Typography, TextField } from '@mui/material';
 
-export default function Note() {
-    const [note, setNote ] = useState('')
-    
+export default function Note({ onNoteChange, note }) {
     return (
         <Box
-        component="form"
-        
         sx={{
           display: 'flex',
           flexDirection: 'column',
@@ -29,14 +25,10 @@ export default function Note() {
           type="text"
           variant="outlined"
           value={note}
-          onChange={(e) => setNote(e.target.value)}
+          onChange={(e) => onNoteChange(e.target.value)}
           fullWidth
           required
         />
-        
-        <Button variant="contained" color="primary" type="submit" fullWidth>
-          Add Note
-        </Button>
       </Box>
     )
 }

@@ -1,0 +1,51 @@
+/* Style the calendar to make tiles bigger */
+.custom-calendar {
+    width: 100%; /* Make the calendar responsive */
+    max-width: 800px; /* Limit the maximum width */
+    margin: auto; /* Center the calendar */
+}
+
+.react-calendar {
+    font-family: Arial, sans-serif;
+    font-size: 18px; /* Increase base font size */
+}
+
+.react-calendar__tile {
+    height: 100px !important; /* Increase the tile height */
+    width: 100px !important; /* Increase the tile width */
+    padding: 15px !important; /* Increase padding inside tiles */
+    font-size: 1.2rem !important; /* Larger text inside tiles */
+}
+
+.react-calendar__month-view__days__day--weekend {
+    background-color: #f0f0f0; /* Light background for weekends */
+}
+
+.react-calendar__tile--now {
+    background: #ffd54f !important; /* Highlight the current day */
+    color: black !important;
+    border-radius: 10px;
+}
+
+.react-calendar__tile--active {
+    background: #81c784 !important; /* Color for active (clicked) tile */
+    color: white !important;
+    border-radius: 10px;
+}
+
+.react-calendar__tile:hover {
+    background-color: #64b5f6 !important; /* Change tile color on hover */
+    color: white !important;
+    border-radius: 10px;
+}
+
+.react-calendar__month-view__weekdays {
+    font-size: 1.5rem !important; /* Make weekday names bigger */
+    font-weight: bold;
+    color: #616161;
+}
+
+.react-calendar__navigation__label, 
+.react-calendar__navigation__arrow {
+    font-size: 1.5rem !important; /* Bigger navigation buttons */
+}

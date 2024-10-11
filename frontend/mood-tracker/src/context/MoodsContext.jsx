@@ -10,11 +10,11 @@ export const moodsReducer = (state, action) => {
       }
     case 'CREATE_MOOD':
       return { 
-        moods: [action.payload, ...state.moods] 
+        moods: [action.payload, ...(state.moods || [])]
       }
     case 'DELETE_MOOD':
       return {
-        moods: state.moods.filter(m => m._id !== action.payload._id)
+        moods: (state.moods || []).filter(m => m._id !== action.payload._id)
       }
     default:
       return state
@@ -23,7 +23,7 @@ export const moodsReducer = (state, action) => {
 
 export const MoodsContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(moodsReducer, { 
-    moods: null
+    moods: []  // Initialize with an empty array instead of null
   })
   
   return (
