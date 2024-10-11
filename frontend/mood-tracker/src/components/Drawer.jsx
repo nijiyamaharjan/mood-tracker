@@ -13,6 +13,8 @@ import ListItemText from '@mui/material/ListItemText';
 import MailIcon from '@mui/icons-material/Mail';
 import Toolbar from '@mui/material/Toolbar';
 
+import { Link } from 'react-router-dom'
+
 const drawerWidth = 240;
 
 function ResponsiveDrawer(props) {
@@ -37,23 +39,30 @@ function ResponsiveDrawer(props) {
 
   const drawer = (
     <div>
-      <Toolbar />
-      <Divider />
-      <List>
-        {['Dashboard', 'Mood Logs', 'Calendar', 'Stats', 'Settings'].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItemButton>
-          </ListItem>
-        ))}
-      </List>
-      <Divider />
-    </div>
-  );
+    <Toolbar />
+    <Divider />
+    <List>
+      {[
+        { text: 'Home', path: '/' },
+        { text: 'Dashboard', path: '/dashboard' },
+        { text: 'Mood Logs', path: '/mood-logs' },
+        { text: 'Calendar', path: '/calendar' },
+        { text: 'Stats', path: '/stats' },
+        { text: 'Settings', path: '/settings' },
+      ].map((item, index) => (
+        <ListItem key={item.text} disablePadding>
+          <ListItemButton component={Link} to={item.path}> {/* Wrap with Link */}
+            <ListItemIcon>
+              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+            </ListItemIcon>
+            <ListItemText primary={item.text} />
+          </ListItemButton>
+        </ListItem>
+      ))}
+    </List>
+    <Divider />
+  </div>
+);
 
   // Remove this const when copying and pasting into your project.
   const container = window !== undefined ? () => window().document.body : undefined;

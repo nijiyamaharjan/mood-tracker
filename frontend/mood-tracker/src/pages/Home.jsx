@@ -36,7 +36,7 @@ export default function Home() {
                     <MoodDetails mood={mood} key={mood._id} />
                 ))}
             </div>
-            <MoodForm />
+            
         </div>
     )
   }

@@ -4,6 +4,12 @@ import Home from './pages/Home';
 import Navbar from './components/Navbar';
 import Drawer from './components/Drawer';
 
+import Dashboard from './pages/Dashboard'; // Example page components
+import MoodLogs from './pages/MoodLogs';
+import Calendar from './pages/Calendar';
+import Stats from './pages/Stats';
+import Settings from './pages/Settings';
+
 export default function App() {
   return (
     <div>
@@ -21,6 +27,11 @@ export default function App() {
             <Routes>
               {/* Define all routes here */}
               <Route path="/" element={<Home />} />
+              <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/mood-logs" element={<MoodLogs />} />
+        <Route path="/calendar" element={<Calendar />} />
+        <Route path="/stats" element={<Stats />} />
+        <Route path="/settings" element={<Settings />} />
             </Routes>
           </div>
         </div>

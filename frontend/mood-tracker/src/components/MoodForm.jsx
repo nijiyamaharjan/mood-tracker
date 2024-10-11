@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import { useMoodsContext } from '../hooks/useMoodsContext'
+import React from 'react';
+import { TextField, Button, Box, Grid, Typography } from '@mui/material';
 
 export default function MoodForm() {
     const { dispatch } = useMoodsContext()
@@ -35,26 +37,55 @@ export default function MoodForm() {
   }
 
   return (
-    <form className="create" onSubmit={handleSubmit}> 
-      <h3>Add a New Mood</h3>
+    <Box
+    component="form"
+    onSubmit={handleSubmit}
+    sx={{
+      display: 'flex',
+      flexDirection: 'column',
+      gap: 2,
+      maxWidth: '400px',
+      margin: 'auto',
+      padding: 2,
+      boxShadow: 3,
+      borderRadius: 2,
+      backgroundColor: '#f9f9f9',
+    }}
+  >
+    <Typography variant="h5" component="h3" gutterBottom>
+      Add a New Mood
+    </Typography>
+    
+    <TextField
+      label="Mood Rating"
+      type="number"
+      variant="outlined"
+      value={rating}
+      onChange={(e) => setRating(e.target.value)}
+      fullWidth
+      required
+    />
+    
+    <TextField
+      label="Emotion"
+      type="text"
+      variant="outlined"
+      value={emotion}
+      onChange={(e) => setEmotion(e.target.value)}
+      fullWidth
+      required
+    />
+    
+    <Button variant="contained" color="primary" type="submit" fullWidth>
+      Add Mood
+    </Button>
 
-      <label>Mood Rating:</label>
-      <input 
-        type="number" 
-        onChange={(e) => setRating(e.target.value)} 
-        value={rating}
-      />
-
-      <label>Emotion: </label>
-      <input 
-        type="text" 
-        onChange={(e) => setEmotion(e.target.value)} 
-        value={emotion}
-      />
-
-      <button>Add Mood</button>
-      {error && <div className="error">{error}</div>}
-    </form>
-  )
+    {error && (
+      <Typography color="error" variant="body2" sx={{ marginTop: 1 }}>
+        {error}
+      </Typography>
+    )}
+  </Box>
+);
 }
 
