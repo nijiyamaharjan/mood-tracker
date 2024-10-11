@@ -53,7 +53,7 @@ export default function MoodForm() {
     }}
   >
     <Typography variant="h5" component="h3" gutterBottom>
-      Add a New Mood
+      Log Mood
     </Typography>
     
     <TextField
@@ -77,7 +77,7 @@ export default function MoodForm() {
     />
     
     <Button variant="contained" color="primary" type="submit" fullWidth>
-      Add Mood
+      Log Mood
     </Button>
 
     {error && (
