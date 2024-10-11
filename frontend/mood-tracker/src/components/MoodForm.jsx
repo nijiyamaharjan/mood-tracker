@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useMoodsContext } from '../hooks/useMoodsContext'
 import React from 'react';
-import { TextField, Button, Box, Grid, Typography } from '@mui/material';
+import { TextField, Button, Box, Typography } from '@mui/material';
 
 export default function MoodForm() {
     const { dispatch } = useMoodsContext()
@@ -47,7 +47,7 @@ export default function MoodForm() {
       maxWidth: '400px',
       margin: 'auto',
       padding: 2,
-      boxShadow: 3,
+      // boxShadow: 3,
       borderRadius: 2,
       backgroundColor: '#f9f9f9',
     }}
