@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import Calendar from 'react-calendar';
+import Button from '@mui/material/Button';  
+import { useNavigate } from 'react-router-dom';
 import 'react-calendar/dist/Calendar.css'; // Import the default styles
 import { Modal, Box, Typography } from '@mui/material'; // Modal for mood details
-
-// Custom styles to increase tile size
 import './CalendarMood.css'; // Custom CSS file to style the calendar
 
 function CalendarMood() {
     const [moodData, setMoodData] = useState([]);
     const [selectedDate, setSelectedDate] = useState(new Date());
-    const [selectedMood, setSelectedMood] = useState(null);
+    const [moodsForDate, setMoodsForDate] = useState([]);    
     const [open, setOpen] = useState(false);
+    const navigate = useNavigate();
 
     // Fetch moods from API
     useEffect(() => {
@@ -30,26 +31,64 @@ function CalendarMood() {
     // Handle selecting a date on the calendar
     const handleDateChange = (date) => {
         setSelectedDate(date);
-        const moodForDate = moodData.find((mood) => {
-            const moodDate = new Date(mood.createdAt).toDateString();
-            return moodDate === date.toDateString();
+        
+        // Find all moods for the selected date, ignoring the time part
+        const moodsForSelectedDate = moodData.filter((mood) => {
+            const moodDate = new Date(mood.date).toLocaleDateString(); // Adjust this line if your API uses a different field for the date
+            return moodDate === date.toLocaleDateString();
         });
-        setSelectedMood(moodForDate);
-        setOpen(true);
+
+        setMoodsForDate(moodsForSelectedDate); // Set all moods for the selected date
+        setOpen(true); // Open modal to show mood details
     };
 
-    // Format the calendar tiles
+    const handleLogMood = () => {
+        const nextDate = new Date(selectedDate);
+        nextDate.setDate(nextDate.getDate() + 1);
+        const formattedDate = nextDate.toISOString().split('T')[0];
+        navigate(`/mood-logs?date=${formattedDate}`);
+    };
+
+    // Format the calendar tiles with mood ratings
     const tileContent = ({ date, view }) => {
         if (view === 'month') {
-            const moodForDate = moodData.find((mood) => {
-                const moodDate = new Date(mood.createdAt).toDateString();
-                return moodDate === date.toDateString();
+            const moodsForDate = moodData.filter((mood) => {
+                const moodDate = new Date(mood.date).toLocaleDateString(); // Get mood date without time
+                return moodDate === date.toLocaleDateString(); // Compare dates
             });
 
-            return moodForDate ? (
-                <span style={{ color: 'green', fontWeight: 'bold' }}>●</span>
-            ) : null;
+            return (
+                <div>
+                    {moodsForDate.map((mood, index) => {
+                        // Define a color for each mood rating
+                        let moodColor;
+                        switch (mood.rating) {
+                            case 'Very Happy':
+                                moodColor = 'green';
+                                break;
+                            case 'Happy':
+                                moodColor = 'lightgreen';
+                                break;
+                            case 'Neutral':
+                                moodColor = 'yellow';
+                                break;
+                            case 'Sad':
+                                moodColor = 'orange';
+                                break;
+                            case 'Very Sad':
+                                moodColor = 'gray';
+                                break;
+                            default:
+                                moodColor = 'gray'; // Default color if rating is unknown
+                        }
+                        return (
+                            <span key={index} style={{ color: moodColor, fontWeight: 'bold' }}>●</span>
+                        );
+                    })}
+                </div>
+            );
         }
+        return null;
     };
 
     return (
@@ -65,17 +104,34 @@ function CalendarMood() {
             {/* Modal to display mood details */}
             <Modal open={open} onClose={() => setOpen(false)}>
                 <Box sx={{ p: 4, bgcolor: 'white', borderRadius: 2 }}>
-                    {selectedMood ? (
-                        <>
-                            <Typography variant="h6">Mood Details</Typography>
-                            <Typography><strong>Rating: </strong>{selectedMood.rating}</Typography>
-                            <Typography><strong>Emotions: </strong>{selectedMood.emotions.join(', ')}</Typography>
-                            <Typography><strong>Hours Slept: </strong>{selectedMood.hoursSlept}</Typography>
-                            <Typography><strong>Note: </strong>{selectedMood.note}</Typography>
-                        </>
+                    <Typography variant="h6">Mood Entries for {selectedDate.toDateString()}</Typography>
+                    {moodsForDate.length > 0 ? (
+                        moodsForDate.map((mood, index) => (
+                            <div key={index}>
+                                <Typography><strong>Rating: </strong>{mood.rating}</Typography>
+                                <Typography><strong>Emotions: </strong>{mood.emotions.join(', ')}</Typography>
+                                <Typography><strong>Hours Slept: </strong>{mood.hoursSlept}</Typography>
+                                <Typography><strong>Note: </strong>{mood.note}</Typography>
+                                <Typography>
+                                    <strong>Date: </strong>{new Date(mood.date).toLocaleDateString()}
+                                </Typography>
+                            </div>
+                        ))
                     ) : (
-                        <Typography>No mood logged for this date</Typography>
+                        <Typography gutterBottom>
+                            No moods logged for this date. Would you like to log one?
+                        </Typography>
                     )}
+
+                    <Button
+                        variant="contained"
+                        color="primary"
+                        fullWidth
+                        sx={{ mt: 2 }}
+                        onClick={handleLogMood}
+                    >
+                        {moodsForDate.length > 0 ? 'Add New Entry' : 'Log Mood'}
+                    </Button>
                 </Box>
             </Modal>
         </div>

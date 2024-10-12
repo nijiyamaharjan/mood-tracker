@@ -27,7 +27,6 @@ export default function Note({ onNoteChange, note }) {
           value={note}
           onChange={(e) => onNoteChange(e.target.value)}
           fullWidth
-          required
         />
       </Box>
     )

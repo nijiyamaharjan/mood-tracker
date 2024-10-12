@@ -33,7 +33,7 @@ const getMood = async (req, res) => {
 
 // Create a new mood
 const createMood = async (req, res) => {
-  const { rating, emotions, hoursSlept, note } = req.body; // Make sure to destructure 'emotions'
+  const { rating, emotions, hoursSlept, note, date } = req.body; // Make sure to destructure 'emotions'
 
   // Validate required fields
   if (rating == null || !Array.isArray(emotions)) {
@@ -42,7 +42,7 @@ const createMood = async (req, res) => {
 
   // Add to the database
   try {
-    const mood = await Mood.create({ rating, emotions, hoursSlept, note });
+    const mood = await Mood.create({ rating, emotions, hoursSlept, note, date });
     res.status(201).json(mood); // Use 201 for created
   } catch (error) {
     res.status(400).json({ error: error.message });

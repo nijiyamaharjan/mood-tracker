@@ -12,26 +12,26 @@ import Settings from './pages/Settings';
 
 export default function App() {
   return (
-    <div>
+    <div style={{ height: '100vh', display: 'flex', flexDirection: 'column' }}>
       <BrowserRouter>
         {/* The Navbar is placed outside of Routes, so it will always be visible */}
         <Navbar />
 
         {/* Main layout with Drawer and content */}
-        <div style={{ display: 'flex' }}>
+        <div style={{ display: 'flex', flexGrow: 1 }}>
           {/* Drawer will always be visible as part of the layout */}
           <Drawer />
 
           {/* Main content area */}
-          <div style={{ flexGrow: 1 }}>
+          <div style={{ flexGrow: 1, padding: '16px' }}>
             <Routes>
               {/* Define all routes here */}
               <Route path="/" element={<Home />} />
               <Route path="/dashboard" element={<Dashboard />} />
-        <Route path="/mood-logs" element={<MoodLogs />} />
-        <Route path="/calendar" element={<Calendar />} />
-        <Route path="/stats" element={<Stats />} />
-        <Route path="/settings" element={<Settings />} />
+              <Route path="/mood-logs" element={<MoodLogs />} />
+              <Route path="/calendar" element={<Calendar />} />
+              <Route path="/stats" element={<Stats />} />
+              <Route path="/settings" element={<Settings />} />
             </Routes>
           </div>
         </div>

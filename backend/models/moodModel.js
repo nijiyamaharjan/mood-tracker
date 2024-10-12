@@ -18,6 +18,10 @@ const moodSchema = new Schema({
     note: {
         type: String,
         required: false
+    },
+    date: {
+        type: Date,
+        required: true
     }
 
 
