@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
-  LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
+  AreaChart, Area, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
 } from 'recharts';
 
 function Dashboard() {
@@ -35,14 +35,14 @@ function Dashboard() {
     <div>
       <h3>Hours of Sleep Over Time</h3>
       <ResponsiveContainer width="100%" height={500}>
-        <LineChart data={sortedMoodData}>
+        <AreaChart data={sortedMoodData}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="date" />
           <YAxis />
           <Tooltip />
           <Legend />
-          <Line type="monotone" dataKey="hoursSlept" stroke="#8884d8" activeDot={{ r: 8 }} />
-        </LineChart>
+          <Area type="monotone" dataKey="hoursSlept" stroke="#8884d8" activeDot={{ r: 8 }} />
+        </AreaChart>
       </ResponsiveContainer>
 
       <h3>Mood Rating Over Time</h3>
