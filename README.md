@@ -19,7 +19,7 @@ The Mood Tracker is a web application that allows users to track their moods ove
   - MongoDB (Atlas for deployment)
 
   ## Screenshots
-  !(img/1.png)
-  !(img/2.png)
-  !(img/3.png)
-  !(img/4.png)
+![Mood Tracker Screenshot 1](img/1.png)
+![Mood Tracker Screenshot 2](img/2.png)
+![Mood Tracker Screenshot 3](img/3.png)
+![Mood Tracker Screenshot 4](img/4.png)
