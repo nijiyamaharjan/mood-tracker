@@ -25,7 +25,7 @@ function Dashboard() {
     date: new Date(item.date).toLocaleDateString(),
     hoursSlept: item.hoursSlept,
     moodRating: item.rating,
-    moodRatingIndex: Number(item.rating) 
+    moodRatingIndex: Number(item.rating) - 1 
   }));
 
   console.log(formattedMoodData)
@@ -53,7 +53,7 @@ function Dashboard() {
           <YAxis
             dataKey="moodRatingIndex"
             type="number"
-            domain={[-1, 5]} // Adjusted to accommodate the range of indices
+            domain={[moodLevels]} // Adjusted to accommodate the range of indices
             ticks={[0, 1, 2, 3, 4]} // Tick indices for mood levels
             tickFormatter={(value) => moodLevels[value]}
           />
@@ -67,7 +67,7 @@ function Dashboard() {
             labelFormatter={(label) => `Date: ${label}`}
           />
           <Legend />
-          <Line type="monotone" dataKey="moodRating" stroke="#82ca9d" activeDot={{ r: 8 }} />
+          <Line type="monotone" dataKey="moodRatingIndex" stroke="#82ca9d" activeDot={{ r: 8 }} />
         </LineChart>
       </ResponsiveContainer>
     </div>
@@ -75,3 +75,4 @@ function Dashboard() {
 }
 
 export default Dashboard;
+

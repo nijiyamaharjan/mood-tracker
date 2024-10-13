@@ -128,7 +128,7 @@ function MoodLogs() {
                 Log Mood
             </Typography>
             <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
-                <Button variant="outlined" onClick={() => changeDate('prev')}>←</Button>
+                <Button variant="outlined" onClick={() => changeDate('prev')}>← Previous</Button>
                 <Typography variant="h6" style={{ margin: '0 1rem' }}>
                 {mood.date.toLocaleDateString('en-US', { 
                     weekday: 'long', 
