@@ -22,6 +22,7 @@ function MoodLogs() {
         note: '',
         date: new Date(Date.UTC(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())) // Default date to today (midnight UTC)
     });
+    const [isToday, setIsToday] = useState(true); // Renamed to be clearer
 
     useEffect(() => {
         const params = new URLSearchParams(location.search);
@@ -30,8 +31,18 @@ function MoodLogs() {
             const newDate = new Date(dateParam);
             newDate.setHours(0, 0, 0, 0); // Set time to midnight
             setMood(prevMood => ({ ...prevMood, date: newDate }));
+            setIsToday(isTodayFunc(newDate)); // Check if the initial date is today
+        } else {
+            setIsToday(isTodayFunc(mood.date)); // Check if default date is today
         }
     }, [location]);
+
+    const isTodayFunc = (date) => {
+        const today = new Date();
+        return date.getFullYear() === today.getFullYear() &&
+               date.getMonth() === today.getMonth() &&
+               date.getDate() === today.getDate();
+    };
 
     const handleRatingChange = (newRating) => {
         setMood((prevMood) => ({ ...prevMood, rating: newRating }));
@@ -50,8 +61,11 @@ function MoodLogs() {
     };
 
     const handleDateChange = (date) => {
-        setMood((prevMood) => ({ ...prevMood, date: date }));
-    }
+        const updatedDate = new Date(date);
+        setMood((prevMood) => ({ ...prevMood, date: updatedDate }));
+        setIsToday(isTodayFunc(updatedDate));
+        setError(null);
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -81,10 +95,10 @@ function MoodLogs() {
 
             if (!response.ok) {
                 setError(json.error);
-                setSuccessMessage(null)
+                setSuccessMessage(null);
             } else {
                 setError(null);
-                setSuccessMessage('Mood added successfully!')
+                setSuccessMessage('Mood added successfully!');
                 setMood({ rating: null, emotions: [], hoursSlept: 0, note: '', date: new Date(Date.UTC(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())) }); // Reset mood after submission
                 console.log('New mood added:', json);
                 dispatch({ type: 'CREATE_MOOD', payload: json });
@@ -94,8 +108,18 @@ function MoodLogs() {
         } catch (error) {
             console.error('Error:', error);
             setError('Failed to submit mood. Please try again.');
-            setSuccessMessage(null)
+            setSuccessMessage(null);
         }
+    };
+
+    const changeDate = (direction) => {
+        const newDate = new Date(mood.date);
+        if (direction === 'prev') {
+            newDate.setDate(newDate.getDate() - 1); // Move to the previous day
+        } else if (direction === 'next') {
+            newDate.setDate(newDate.getDate() + 1); // Move to the next day
+        }
+        handleDateChange(newDate); // Update moods for the new date
     };
 
     return (
@@ -103,12 +127,30 @@ function MoodLogs() {
             <Typography variant="h4" component="h1" gutterBottom>
                 Log Mood
             </Typography>
+            <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
+                <Button variant="outlined" onClick={() => changeDate('prev')}>←</Button>
+                <Typography variant="h6" style={{ margin: '0 1rem' }}>
+                {mood.date.toLocaleDateString('en-US', { 
+                    weekday: 'long', 
+                    year: 'numeric', 
+                    month: 'short', 
+                    day: 'numeric' 
+                })}
+                </Typography>
+                {/* Only show the Next button if it's not today */}
+                {!isToday && <Button variant="outlined" onClick={() => changeDate('next')}>Next →</Button>}
+            </div>
             <form onSubmit={handleSubmit}>
                 <SleepSlider value={mood.hoursSlept} onHoursSleptChange={handleHoursSleptChange} />
                 <MoodRating selectedMood={mood.rating} onRatingChange={handleRatingChange} />
                 <Emotions selectedEmotions={mood.emotions} onEmotionsChange={handleEmotionsChange} />
                 <Note onNoteChange={handleNoteChange} note={mood.note} />
-                <DatePicker selected={mood.date} onChange={handleDateChange} dateFormat="yyyy-MM-dd" />
+                {/* <DatePicker
+                    selected={mood.date}
+                    onChange={handleDateChange}
+                    dateFormat="yyyy-MM-dd"
+                    maxDate={new Date()} // Disable future dates
+                /> */}
                 <Button variant="contained" color="primary" type="submit" fullWidth sx={{ mt: 2 }}>
                     Add Mood
                 </Button>

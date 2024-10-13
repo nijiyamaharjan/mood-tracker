@@ -76,7 +76,7 @@ function CalendarMood() {
                                 moodColor = 'orange';
                                 break;
                             case 'Very Sad':
-                                moodColor = 'gray';
+                                moodColor = 'red';
                                 break;
                             default:
                                 moodColor = 'gray'; // Default color if rating is unknown
@@ -91,14 +91,19 @@ function CalendarMood() {
         return null;
     };
 
+    // Get today's date
+    const today = new Date();
+    today.setHours(0, 0, 0, 0); // Set the time to midnight for accurate comparison
+
     return (
         <div>
-            {/* Calendar component */}
+            {/* Calendar component with minDate prop to prevent future date selection */}
             <Calendar
                 onChange={handleDateChange}
                 value={selectedDate}
                 tileContent={tileContent}
                 className="custom-calendar"
+                maxDate={today} // Prevent selecting future dates
             />
 
             {/* Modal to display mood details */}
@@ -108,13 +113,10 @@ function CalendarMood() {
                     {moodsForDate.length > 0 ? (
                         moodsForDate.map((mood, index) => (
                             <div key={index}>
-                                <Typography><strong>Rating: </strong>{mood.rating}</Typography>
+                                <Typography sx={{ pt: 1}}><strong>Rating: </strong>{mood.rating}</Typography>
                                 <Typography><strong>Emotions: </strong>{mood.emotions.join(', ')}</Typography>
                                 <Typography><strong>Hours Slept: </strong>{mood.hoursSlept}</Typography>
-                                <Typography><strong>Note: </strong>{mood.note}</Typography>
-                                <Typography>
-                                    <strong>Date: </strong>{new Date(mood.date).toLocaleDateString()}
-                                </Typography>
+                                <Typography sx={{ borderBottom: '1px solid lightgray', pb: 1 }}><strong>Note: </strong>{mood.note}</Typography>
                             </div>
                         ))
                     ) : (

@@ -40,7 +40,12 @@ export default function Home() {
             {sortedDates.map((date) => (
                 <Box key={date} sx={{ marginBottom: 4 }}>
                     <Typography variant="h6" sx={{ borderBottom: '1px solid lightgray', pb: 1 }}>
-                        {date}
+                    {new Date(date).toLocaleDateString('en-US', { 
+                            weekday: 'long', 
+                            year: 'numeric', 
+                            month: 'long',
+                            day: 'numeric' 
+                        })}
                     </Typography>
                     {groupedMoods[date].map((mood) => (
                         <MoodDetails mood={mood} key={mood._id} />
