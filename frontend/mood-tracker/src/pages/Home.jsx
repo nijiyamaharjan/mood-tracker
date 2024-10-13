@@ -36,22 +36,28 @@ export default function Home() {
 
     const sortedDates = Object.keys(groupedMoods).sort((a, b) => new Date(b) - new Date(a))
     return (
+        <>
         <Box sx={{ padding: 2 }}>
             {sortedDates.map((date) => (
-                <Box key={date} sx={{ marginBottom: 4 }}>
+                <Box key={date} sx={{ marginBottom: 2 }}>
                     <Typography variant="h6" sx={{ borderBottom: '1px solid lightgray', pb: 1 }}>
-                    {new Date(date).toLocaleDateString('en-US', { 
+                        {new Date(date).toLocaleDateString('en-US', { 
                             weekday: 'long', 
                             year: 'numeric', 
                             month: 'long',
                             day: 'numeric' 
                         })}
                     </Typography>
-                    {groupedMoods[date].map((mood) => (
-                        <MoodDetails mood={mood} key={mood._id} />
-                    ))}
+                    <div className="flex flex-row flex-wrap" style={{ overflow: 'hidden' }}> {/* Use flex-wrap for overflow to next row */}
+                        {groupedMoods[date].map((mood) => (
+                            <Box key={mood._id} sx={{ marginRight: '2px'}}> {/* Adjust margins here */}
+                                <MoodDetails mood={mood} />
+                            </Box>
+                        ))}   
+                    </div> 
                 </Box>
             ))}
         </Box>
+        </>
     );
 }

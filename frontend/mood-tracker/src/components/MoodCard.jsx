@@ -23,7 +23,9 @@ export default function MoodCard({ mood, handleDelete }) {
       >
         <Card variant="soft">
           <CardContent>
-            {/* <Typography level="title-md">{new Date(mood.createdAt).toLocaleString()}</Typography> */}
+          <Typography level="title-md">
+            {new Date(mood.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
+          </Typography>
             <Typography><strong>Rating: </strong>{getMoodLevel(mood.rating)}</Typography>
             <Typography>
               <strong>Emotions: </strong>
@@ -31,10 +33,10 @@ export default function MoodCard({ mood, handleDelete }) {
             </Typography>
             <Typography><strong>Hours Slept: </strong>{mood.hoursSlept || '0'}</Typography>
             <Typography><strong>Note: </strong>{mood.note || 'N/A'}</Typography>
-            <Typography>
+            {/* <Typography>
               <strong>Date: </strong>
               {mood.date ? new Date(mood.date).toLocaleDateString() : 'N/A'}
-            </Typography>
+            </Typography> */}
             <button onClick={handleDelete}>Delete</button>
           </CardContent>
         </Card>
