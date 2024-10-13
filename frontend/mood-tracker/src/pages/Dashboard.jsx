@@ -30,7 +30,7 @@ function Dashboard() {
 
   console.log(formattedMoodData)
 
-  const sortedMoodData = formattedMoodData.sort((a, b) => -new Date(b.date) + new Date(a.date));
+  const sortedMoodData = formattedMoodData.sort((a, b) =>new Date(a.date) - new Date(b.date));
   return (
     <div>
       <h3>Hours of Sleep Over Time</h3>
