@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import {
-  AreaChart, Area, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
+  BarChart, Bar, AreaChart, Area, LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
 } from 'recharts';
 
 function Dashboard() {
@@ -28,14 +28,33 @@ function Dashboard() {
     moodRatingIndex: Number(item.rating) - 1 
   }));
 
+  const aggregatedMoodData = moodData.reduce((acc, item) => {
+    const date = new Date(item.date).toLocaleDateString();
+    const moodRating = Number(item.rating) - 1; // Convert to index
+    acc[date] = acc[date] || { date, VerySad: 0, Sad: 0, Neutral: 0, Happy: 0, VeryHappy: 0 };
+    
+    switch (moodRating) {
+      case 0: acc[date].VerySad++; break;
+      case 1: acc[date].Sad++; break;
+      case 2: acc[date].Neutral++; break;
+      case 3: acc[date].Happy++; break;
+      case 4: acc[date].VeryHappy++; break;
+      default: break;
+    }
+    return acc;
+  }, {});
+
   console.log(formattedMoodData)
 
+  const sortedMoodDataForEmotions = Object.values(aggregatedMoodData).sort((a, b) => new Date(a.date) - new Date(b.date));
+
   const sortedMoodData = formattedMoodData.sort((a, b) =>new Date(a.date) - new Date(b.date));
+
   return (
     <div>
       <h3>Hours of Sleep Over Time</h3>
       <ResponsiveContainer width="100%" height={500}>
-        <AreaChart data={sortedMoodData}>
+      <AreaChart data={sortedMoodData}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="date" />
           <YAxis />
@@ -45,34 +64,23 @@ function Dashboard() {
         </AreaChart>
       </ResponsiveContainer>
 
-      <h3>Mood Rating Over Time</h3>
+      <h3>Mood Ratings Over Time</h3>
       <ResponsiveContainer width="100%" height={500}>
-        <LineChart data={sortedMoodData}>
+        <BarChart data={sortedMoodDataForEmotions}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="date" />
-          <YAxis
-            dataKey="moodRatingIndex"
-            type="number"
-            domain={[moodLevels]} // Adjusted to accommodate the range of indices
-            ticks={[0, 1, 2, 3, 4]} // Tick indices for mood levels
-            tickFormatter={(value) => moodLevels[value]}
-          />
-          <Tooltip 
-            formatter={(value, name) => {
-              if (name === 'moodRatingIndex') {
-                return moodLevels[value];
-              }
-              return value;
-            }}
-            labelFormatter={(label) => `Date: ${label}`}
-          />
+          <YAxis />
+          <Tooltip />
           <Legend />
-          <Line type="monotone" dataKey="moodRatingIndex" stroke="#82ca9d" activeDot={{ r: 8 }} />
-        </LineChart>
+          <Bar dataKey="VerySad" stackId="a" fill="#ff4d4d" />
+          <Bar dataKey="Sad" stackId="a" fill="#ffcc00" />
+          <Bar dataKey="Neutral" stackId="a" fill="#80ccff" />
+          <Bar dataKey="Happy" stackId="a" fill="#66ff66" />
+          <Bar dataKey="VeryHappy" stackId="a" fill="#009933" />
+        </BarChart>
       </ResponsiveContainer>
     </div>
   );
 }
 
 export default Dashboard;
-
