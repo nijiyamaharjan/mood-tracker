@@ -25,15 +25,14 @@ function Dashboard() {
     date: new Date(item.date).toLocaleDateString(),
     hoursSlept: item.hoursSlept,
     moodRating: item.rating,
-    moodRatingIndex: moodLevels.indexOf(item.rating) + 1
+    moodRatingIndex: moodLevels.indexOf(item.rating) + 3
   }));
 
-  const sortedMoodData = formattedMoodData.sort((a, b) => - new Date(b.date) + new Date(a.date));
-
+  const sortedMoodData = formattedMoodData.sort((a, b) => -new Date(b.date) + new Date(a.date));
   return (
     <div>
       <h3>Hours of Sleep Over Time</h3>
-      <ResponsiveContainer width="100%" height={300}>
+      <ResponsiveContainer width="100%" height={500}>
         <LineChart data={sortedMoodData}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="date" />
@@ -45,14 +44,14 @@ function Dashboard() {
       </ResponsiveContainer>
 
       <h3>Mood Rating Over Time</h3>
-      <ResponsiveContainer width="100%" height={300}>
+      <ResponsiveContainer width="100%" height={500}>
         <LineChart data={sortedMoodData}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="date" />
           <YAxis 
             dataKey="moodRatingIndex"
             type="number" 
-            domain={[0, 4]}
+            domain={[0, 5]}
             ticks={[0, 1, 2, 3, 4]}
             tickFormatter={(value) => moodLevels[value]}
           />
