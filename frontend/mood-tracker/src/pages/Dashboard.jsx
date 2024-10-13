@@ -25,8 +25,10 @@ function Dashboard() {
     date: new Date(item.date).toLocaleDateString(),
     hoursSlept: item.hoursSlept,
     moodRating: item.rating,
-    moodRatingIndex: moodLevels.indexOf(item.rating) + 3
+    moodRatingIndex: Number(item.rating) 
   }));
+
+  console.log(formattedMoodData)
 
   const sortedMoodData = formattedMoodData.sort((a, b) => -new Date(b.date) + new Date(a.date));
   return (
@@ -48,11 +50,11 @@ function Dashboard() {
         <LineChart data={sortedMoodData}>
           <CartesianGrid strokeDasharray="3 3" />
           <XAxis dataKey="date" />
-          <YAxis 
+          <YAxis
             dataKey="moodRatingIndex"
-            type="number" 
-            domain={[0, 5]}
-            ticks={[0, 1, 2, 3, 4]}
+            type="number"
+            domain={[-1, 5]} // Adjusted to accommodate the range of indices
+            ticks={[0, 1, 2, 3, 4]} // Tick indices for mood levels
             tickFormatter={(value) => moodLevels[value]}
           />
           <Tooltip 
