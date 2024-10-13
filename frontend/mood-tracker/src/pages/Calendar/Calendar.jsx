@@ -115,7 +115,7 @@ function CalendarMood() {
                             <div key={index}>
                                 <Typography sx={{ pt: 1}}><strong>Rating: </strong>{mood.rating}</Typography>
                                 <Typography><strong>Emotions: </strong>{mood.emotions.join(', ')}</Typography>
-                                <Typography><strong>Hours Slept: </strong>{mood.hoursSlept}</Typography>
+                                {/* <Typography><strong>Hours Slept: </strong>{mood.hoursSlept}</Typography> */}
                                 <Typography sx={{ borderBottom: '1px solid lightgray', pb: 1 }}><strong>Note: </strong>{mood.note}</Typography>
                             </div>
                         ))

@@ -4,13 +4,10 @@ import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import Divider from '@mui/material/Divider';
 import Drawer from '@mui/material/Drawer';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
 import ListItemButton from '@mui/material/ListItemButton';
-import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import MailIcon from '@mui/icons-material/Mail';
 import Toolbar from '@mui/material/Toolbar';
 
 import { Link } from 'react-router-dom'
@@ -43,18 +40,14 @@ function ResponsiveDrawer(props) {
     <Divider />
     <List>
       {[
-        { text: 'Home', path: '/' },
         { text: 'Dashboard', path: '/dashboard' },
-        { text: 'Mood Logs', path: '/mood-logs' },
+        { text: 'Entries', path: '/' },
+        { text: 'Log Mood', path: '/mood-logs' },
         { text: 'Calendar', path: '/calendar' },
-        { text: 'Stats', path: '/stats' },
         { text: 'Settings', path: '/settings' },
       ].map((item, index) => (
         <ListItem key={item.text} disablePadding>
           <ListItemButton component={Link} to={item.path}> {/* Wrap with Link */}
-            <ListItemIcon>
-              {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-            </ListItemIcon>
             <ListItemText primary={item.text} />
           </ListItemButton>
         </ListItem>

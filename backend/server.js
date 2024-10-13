@@ -22,7 +22,8 @@ app.use(express.json())
 app.use('/api/moods', moodRoutes)
 
 // connect to db
-mongoose.connect(process.env.MONGO_URI)
+// mongoose.connect(process.env.MONGO_URI)
+mongoose.connect('mongodb://localhost:27017/moodTracker')
     .then(() => {
         app.listen(process.env.PORT, () => {
             console.log('connected to db and listening on port 4000')

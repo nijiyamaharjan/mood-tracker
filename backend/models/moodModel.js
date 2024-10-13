@@ -11,10 +11,10 @@ const moodSchema = new Schema({
         type: Array,
         required: true
     },
-    hoursSlept: {
-        type: Number,
-        required: false
-    },
+    // hoursSlept: {
+    //     type: Number,
+    //     required: false
+    // },
     note: {
         type: String,
         required: false

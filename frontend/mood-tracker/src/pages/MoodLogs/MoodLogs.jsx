@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import SleepSlider from '../components/MoodLogs/SleepSlider';
-import MoodRating from '../components/MoodLogs/MoodRating';
-import Emotions from '../components/MoodLogs/Emotions';
-import Note from '../components/MoodLogs/Note';
-import { useMoodsContext } from '../hooks/useMoodsContext';
+import MoodRating from './MoodRating';
+import Emotions from './Emotions';
+import Note from './Note';
+import { useMoodsContext } from '../../hooks/useMoodsContext';
 import { Button, Box, Typography } from '@mui/material';
-import DatePicker from "react-datepicker";
 
 import "react-datepicker/dist/react-datepicker.css";
 
@@ -18,7 +16,7 @@ function MoodLogs() {
     const [mood, setMood] = useState({
         rating: null,
         emotions: [],
-        hoursSlept: 0,
+        // hoursSlept: 0,
         note: '',
         date: new Date(Date.UTC(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())) // Default date to today (midnight UTC)
     });
@@ -48,9 +46,9 @@ function MoodLogs() {
         setMood((prevMood) => ({ ...prevMood, rating: newRating }));
     };
 
-    const handleHoursSleptChange = (hours) => {
-        setMood((prevMood) => ({ ...prevMood, hoursSlept: hours }));
-    };
+    // const handleHoursSleptChange = (hours) => {
+    //     setMood((prevMood) => ({ ...prevMood, hoursSlept: hours }));
+    // };
 
     const handleEmotionsChange = (selectedEmotions) => {
         setMood((prevMood) => ({ ...prevMood, emotions: selectedEmotions }));
@@ -99,7 +97,7 @@ function MoodLogs() {
             } else {
                 setError(null);
                 setSuccessMessage('Mood added successfully!');
-                setMood({ rating: null, emotions: [], hoursSlept: 0, note: '', date: new Date(Date.UTC(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())) }); // Reset mood after submission
+                setMood({ rating: null, emotions: [], note: '', date: new Date(Date.UTC(new Date().getFullYear(), new Date().getMonth(), new Date().getDate())) }); // Reset mood after submission
                 console.log('New mood added:', json);
                 dispatch({ type: 'CREATE_MOOD', payload: json });
             }
@@ -141,7 +139,7 @@ function MoodLogs() {
                 {!isToday && <Button variant="outlined" onClick={() => changeDate('next')}>Next →</Button>}
             </div>
             <form onSubmit={handleSubmit}>
-                <SleepSlider value={mood.hoursSlept} onHoursSleptChange={handleHoursSleptChange} />
+                {/* <SleepSlider value={mood.hoursSlept} onHoursSleptChange={handleHoursSleptChange} /> */}
                 <MoodRating selectedMood={mood.rating} onRatingChange={handleRatingChange} />
                 <Emotions selectedEmotions={mood.emotions} onEmotionsChange={handleEmotionsChange} />
                 <Note onNoteChange={handleNoteChange} note={mood.note} />

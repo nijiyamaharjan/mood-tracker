@@ -22,7 +22,7 @@ function Dashboard() {
 
   const formattedMoodData = moodData.map(item => ({
     date: new Date(item.date).toLocaleDateString(),
-    hoursSlept: item.hoursSlept,
+    // hoursSlept: item.hoursSlept,
     moodRating: item.rating,
     moodRatingIndex: Number(item.rating) - 1,
     emotions: item.emotions
@@ -82,17 +82,9 @@ function Dashboard() {
 
   return (
     <div>
-      <h3>Hours of Sleep Over Time</h3>
-      <ResponsiveContainer width="100%" height={500}>
-        <AreaChart data={sortedMoodData}>
-          <CartesianGrid strokeDasharray="3 3" />
-          <XAxis dataKey="date" />
-          <YAxis />
-          <Tooltip />
-          <Legend />
-          <Area type="monotone" dataKey="hoursSlept" stroke="#8884d8" activeDot={{ r: 8 }} />
-        </AreaChart>
-      </ResponsiveContainer>
+
+          
+
 
       <h3>Mood Ratings Over Time</h3>
       <ResponsiveContainer width="100%" height={500}>
@@ -102,11 +94,11 @@ function Dashboard() {
           <YAxis />
           <Tooltip />
           <Legend />
-          <Bar dataKey="VerySad" stackId="a" fill="#ff4d4d" />
-          <Bar dataKey="Sad" stackId="a" fill="#ffcc00" />
-          <Bar dataKey="Neutral" stackId="a" fill="#80ccff" />
-          <Bar dataKey="Happy" stackId="a" fill="#66ff66" />
-          <Bar dataKey="VeryHappy" stackId="a" fill="#009933" />
+          <Bar dataKey="VerySad" stackId="a" fill="#8C8C8C" />
+          <Bar dataKey="Sad" stackId="a" fill="#033E8C" />
+          <Bar dataKey="Neutral" stackId="a" fill="#EEECE2" />
+          <Bar dataKey="Happy" stackId="a" fill="#F29325" />
+          <Bar dataKey="VeryHappy" stackId="a" fill="#F2CD13" />
         </BarChart>
       </ResponsiveContainer>
 
@@ -121,10 +113,9 @@ function Dashboard() {
             cy="50%"
             outerRadius={150}
             fill="#8884d8"
-            label
           >
             {pieDataMoods.map((entry, index) => (
-              <Cell key={`cell-${index}`} fill={getColor(index)} />
+              <Cell key={`cell-${index}`} fill={getMoodColor(index)} />
             ))}
           </Pie>
           <Tooltip />
@@ -142,10 +133,10 @@ function Dashboard() {
             cy="50%"
             outerRadius={150}
             fill="#8884d8"
-            label
+            
           >
             {pieDataEmotions.map((entry, index) => ( // Corrected to use pieDataEmotions
-              <Cell key={`cell-${index}`} fill={getColor(index)} />
+              <Cell key={`cell-${index}`} fill={getEmotionColor(index)} />
             ))}
           </Pie>
           <Tooltip />
@@ -155,9 +146,13 @@ function Dashboard() {
   );
 }
 
-const getColor = (index) => {
-  const colors = ['#ff4d4d', '#ffcc00', '#80ccff', '#66ff66', '#009933', '#ffb3e6', '#d9b3ff', '#66b3ff', '#ffcc99', '#c2f0c2', '#ffb3b3', '#b3e6ff'];
-  return colors[index % colors.length];
+const getEmotionColor = (index) => {
+  const colors = ['#F2B6C6', '#BF2A70', '#48CAD9', '#AEEBF2', '#D8F0F2', '#D9E4FA', '#E5DCFA', '#BEBFFA', '#A1DBFA9', '#E9C2FF', '#FFA39D', '#BF0426'];
+  return colors[index];
 };
 
+const getMoodColor = (index) => {
+  const colors = ['#8C8C8C', '#033E8C', '#EEECE2', '#F29325', '#F2CD13'];
+  return colors[index];
+};
 export default Dashboard;
