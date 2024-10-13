@@ -1,8 +1,19 @@
-# React + Vite
+# Mood Tracker Project
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Project Overview
+The Mood Tracker is a web application that allows users to track their moods over time. Users can log their mood ratings, associated emotions and optional notes. The application provides a visual representation of mood trends, helping users reflect on their emotional well-being.
 
-Currently, two official plugins are available:
+## Features
+- **Mood Logging**: Users can log their moods with ratings and associated emotions.
+- **Mood Visualization**: Display mood trends over time.
+- **Responsive Design**: Optimized for both desktop and mobile devices.
+- **Delete Entries**: Users can delete their mood entries as needed.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Technologies Used
+- **Frontend**: 
+  - React
+  - Material-UI (Joy)
+- **Backend**: 
+  - Node.js
+  - Express
+  - MongoDB (Atlas for deployment)
