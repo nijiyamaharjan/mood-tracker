@@ -16,9 +16,10 @@ export default function Emotions({ selectedEmotions, onEmotionsChange }) {
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 3 }}>
-      <Typography variant="h6" gutterBottom>
+            <h3 className='font-bold justify-center text-center text-xl my-2'>
+
         Select Your Emotions:
-      </Typography>
+      </h3>
 
       <Box sx={{ display: 'flex', flexWrap: 'wrap', justifyContent: 'center', gap: 2, maxWidth: 740 }}>
         {emotions.map((emotion, index) => (

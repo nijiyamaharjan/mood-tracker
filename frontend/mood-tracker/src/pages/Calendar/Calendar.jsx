@@ -49,6 +49,16 @@ function CalendarMood() {
         navigate(`/mood-logs?date=${formattedDate}`);
     };
 
+    // Define mood color mapping
+    // #8C8C8C', '#033E8C', '#EEECE2', '#F29325', '#F2CD13
+    const moodColors = {
+        1: '#8C8C8C',
+        2: '#033E8C',
+        3: '#EEECE2',
+        4: '#F29325',
+        5: '#F2CD13',
+    };
+
     // Format the calendar tiles with mood ratings
     const tileContent = ({ date, view }) => {
         if (view === 'month') {
@@ -60,27 +70,7 @@ function CalendarMood() {
             return (
                 <div>
                     {moodsForDate.map((mood, index) => {
-                        // Define a color for each mood rating
-                        let moodColor;
-                        switch (mood.rating) {
-                            case 'Very Happy':
-                                moodColor = 'green';
-                                break;
-                            case 'Happy':
-                                moodColor = 'lightgreen';
-                                break;
-                            case 'Neutral':
-                                moodColor = 'yellow';
-                                break;
-                            case 'Sad':
-                                moodColor = 'orange';
-                                break;
-                            case 'Very Sad':
-                                moodColor = 'red';
-                                break;
-                            default:
-                                moodColor = 'gray'; // Default color if rating is unknown
-                        }
+                        const moodColor = moodColors[mood.rating] || 'gray'; // Use gray for unknown moods
                         return (
                             <span key={index} style={{ color: moodColor, fontWeight: 'bold' }}>●</span>
                         );

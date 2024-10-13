@@ -82,11 +82,7 @@ function Dashboard() {
 
   return (
     <div>
-
-          
-
-
-      <h3>Mood Ratings Over Time</h3>
+      <h3 className='font-bold justify-center text-center text-xl my-4'>Mood Ratings Over Time</h3>
       <ResponsiveContainer width="100%" height={500}>
         <BarChart data={sortedMoodDataForEmotions}>
           <CartesianGrid strokeDasharray="3 3" />
@@ -102,7 +98,8 @@ function Dashboard() {
         </BarChart>
       </ResponsiveContainer>
 
-      <h3>Mood Distribution</h3>
+      <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
+      <h3 className='font-bold justify-center text-center text-xl my-2'>Mood Distribution</h3>
       <ResponsiveContainer width="100%" height={500}>
         <PieChart>
           <Pie
@@ -121,8 +118,8 @@ function Dashboard() {
           <Tooltip />
         </PieChart>
       </ResponsiveContainer>
-
-      <h3>Emotions Distribution</h3>
+      <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
+      <h3 className='font-bold justify-center text-center text-xl my-2'>Emotions Distribution</h3>
       <ResponsiveContainer width="100%" height={500}>
         <PieChart>
           <Pie

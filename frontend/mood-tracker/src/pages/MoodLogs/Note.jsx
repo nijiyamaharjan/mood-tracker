@@ -3,6 +3,10 @@ import { Box, Typography, TextField } from '@mui/material';
 
 export default function Note({ onNoteChange, note }) {
     return (
+      <>
+      <h3 className='font-bold justify-center text-center text-xl my-2'>
+          Add Note
+      </h3>
         <Box
         sx={{
           display: 'flex',
@@ -11,14 +15,12 @@ export default function Note({ onNoteChange, note }) {
           maxWidth: '400px',
           margin: 'auto',
           padding: 2,
-          boxShadow: 3,
+          boxShadow: 0,
           borderRadius: 2,
           backgroundColor: '#f9f9f9',
         }}
       >
-        <Typography variant="h5" component="h3" gutterBottom>
-          Add Note
-        </Typography>
+        
         
         <TextField
           label="Note"
@@ -29,5 +31,6 @@ export default function Note({ onNoteChange, note }) {
           fullWidth
         />
       </Box>
+      </>
     )
 }

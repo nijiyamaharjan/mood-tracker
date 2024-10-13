@@ -6,7 +6,7 @@ import Drawer from './components/Drawer';
 
 import Dashboard from './pages/Dashboard'; // Example page components
 import MoodLogs from './pages/MoodLogs/MoodLogs';
-import Calendar from './pages/Calendar/Calendar';
+import CalendarMood from './pages/Calendar/Calendar';
 import Settings from './pages/Settings';
 
 export default function App() {
@@ -28,8 +28,8 @@ export default function App() {
               <Route path="/" element={<Home />} />
               <Route path="/dashboard" element={<Dashboard />} />
               <Route path="/mood-logs" element={<MoodLogs />} />
-              <Route path="/calendar" element={<Calendar />} />
-              <Route path="/settings" element={<Settings />} />
+              <Route path="/calendar" element={<CalendarMood />} />
+              {/* <Route path="/settings" element={<Settings />} /> */}
             </Routes>
           </div>
         </div>

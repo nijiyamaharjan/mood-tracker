@@ -16,9 +16,9 @@ export default function MoodRating({ selectedMood, onRatingChange }) {
 
   return (
     <Box sx={{ display: 'flex', flexDirection: 'column', alignItems: 'center', mt: 3 }}>
-      <Typography variant="h6" gutterBottom>
+      <h3 className='font-bold justify-center text-center text-xl my-2'>
         Select Your Mood:
-      </Typography>
+      </h3>
 
       <Box sx={{ display: 'flex', justifyContent: 'center', gap: 2 }}>
         {moodLevels.map((level, index) => (

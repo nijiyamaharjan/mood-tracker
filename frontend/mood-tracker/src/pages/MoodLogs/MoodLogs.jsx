@@ -122,9 +122,9 @@ function MoodLogs() {
 
     return (
         <Box sx={{ maxWidth: '600px', margin: 'auto', padding: 2 }}>
-            <Typography variant="h4" component="h1" gutterBottom>
-                Log Mood
-            </Typography>
+            <h3 className='font-bold justify-center text-center text-2xl my-2'> 
+               Log Mood
+            </h3>
             <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
                 <Button variant="outlined" onClick={() => changeDate('prev')}>← Previous</Button>
                 <Typography variant="h6" style={{ margin: '0 1rem' }}>
@@ -141,7 +141,9 @@ function MoodLogs() {
             <form onSubmit={handleSubmit}>
                 {/* <SleepSlider value={mood.hoursSlept} onHoursSleptChange={handleHoursSleptChange} /> */}
                 <MoodRating selectedMood={mood.rating} onRatingChange={handleRatingChange} />
+                <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
                 <Emotions selectedEmotions={mood.emotions} onEmotionsChange={handleEmotionsChange} />
+                <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
                 <Note onNoteChange={handleNoteChange} note={mood.note} />
                 {/* <DatePicker
                     selected={mood.date}
