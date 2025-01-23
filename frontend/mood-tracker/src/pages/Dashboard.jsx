@@ -4,6 +4,8 @@ import {
   BarChart, Bar, AreaChart, Area, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer
 } from 'recharts';
 
+import dummyMoodData from './dummyMoodData.js'
+
 function Dashboard() {
   const [moodData, setMoodData] = useState([]);
 
@@ -11,10 +13,14 @@ function Dashboard() {
     const fetchMoods = async () => {
       try {
         const response = await fetch('http://localhost:4000/api/moods');
+        if (!response.ok) {
+          throw new Error('Failed to fetch');
+        }
         const json = await response.json();
-        setMoodData(json);
+        setMoodData(json.length > 0 ? json : dummyMoodData); // Use dummy data if the response is empty
       } catch (error) {
         console.error('Error fetching mood data:', error);
+        setMoodData(dummyMoodData); // Use dummy data if an error occurs
       }
     };
     fetchMoods();
@@ -22,7 +28,6 @@ function Dashboard() {
 
   const formattedMoodData = moodData.map(item => ({
     date: new Date(item.date).toLocaleDateString(),
-    // hoursSlept: item.hoursSlept,
     moodRating: item.rating,
     moodRatingIndex: Number(item.rating) - 1,
     emotions: item.emotions
@@ -30,7 +35,7 @@ function Dashboard() {
 
   const aggregatedMoodData = moodData.reduce((acc, item) => {
     const date = new Date(item.date).toLocaleDateString();
-    const moodRating = Number(item.rating) - 1; // Convert to index
+    const moodRating = Number(item.rating) - 1;
     acc[date] = acc[date] || { date, VerySad: 0, Sad: 0, Neutral: 0, Happy: 0, VeryHappy: 0 };
     switch (moodRating) {
       case 0: acc[date].VerySad++; break;
@@ -44,7 +49,7 @@ function Dashboard() {
   }, {});
 
   const totalMoodData = moodData.reduce((acc, item) => {
-    const moodRating = Number(item.rating) - 1; // Convert to index
+    const moodRating = Number(item.rating) - 1;
     acc[moodRating] = (acc[moodRating] || 0) + 1;
     return acc;
   }, {});
@@ -52,12 +57,11 @@ function Dashboard() {
   const moodLevels = ['Very Sad', 'Sad', 'Neutral', 'Happy', 'Very Happy'];
   const pieDataMoods = moodLevels.map((name, index) => ({
     name,
-    value: totalMoodData[index] || 0, // Get count or default to 0
+    value: totalMoodData[index] || 0,
   }));
 
   const aggregatedEmotions = moodData.reduce((acc, item) => {
-    const emotions = item.emotions; // This is an array of emotions
-    // Increment the count for each emotion in the array
+    const emotions = item.emotions;
     emotions.forEach(emotion => {
       acc[emotion] = (acc[emotion] || 0) + 1;
     });
@@ -68,16 +72,13 @@ function Dashboard() {
     'happy', 'excited', 'grateful', 'relaxed', 'content', 'tired',
     'unsure', 'bored', 'anxious', 'angry', 'stressed', 'sad'
   ];
-  
-  // Prepare the pie data using the aggregatedEmotions
+
   const pieDataEmotions = emotions.map(name => ({
     name,
-    value: aggregatedEmotions[name] || 0, // Get count or default to 0
+    value: aggregatedEmotions[name] || 0,
   }));
-  console.log(formattedMoodData)
 
   const sortedMoodDataForEmotions = Object.values(aggregatedMoodData).sort((a, b) => new Date(a.date) - new Date(b.date));
-
   const sortedMoodData = formattedMoodData.sort((a, b) => new Date(a.date) - new Date(b.date));
 
   return (
@@ -98,7 +99,7 @@ function Dashboard() {
         </BarChart>
       </ResponsiveContainer>
 
-      <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
+      <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
       <h3 className='font-bold justify-center text-center text-xl my-2'>Mood Distribution</h3>
       <ResponsiveContainer width="100%" height={500}>
         <PieChart>
@@ -118,7 +119,8 @@ function Dashboard() {
           <Tooltip />
         </PieChart>
       </ResponsiveContainer>
-      <hr class="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
+
+      <hr className="h-px my-8 bg-gray-200 border-0 dark:bg-gray-700" />
       <h3 className='font-bold justify-center text-center text-xl my-2'>Emotions Distribution</h3>
       <ResponsiveContainer width="100%" height={500}>
         <PieChart>
@@ -130,9 +132,8 @@ function Dashboard() {
             cy="50%"
             outerRadius={150}
             fill="#8884d8"
-            
           >
-            {pieDataEmotions.map((entry, index) => ( // Corrected to use pieDataEmotions
+            {pieDataEmotions.map((entry, index) => (
               <Cell key={`cell-${index}`} fill={getEmotionColor(index)} />
             ))}
           </Pie>
@@ -152,4 +153,5 @@ const getMoodColor = (index) => {
   const colors = ['#8C8C8C', '#033E8C', '#EEECE2', '#F29325', '#F2CD13'];
   return colors[index];
 };
+
 export default Dashboard;

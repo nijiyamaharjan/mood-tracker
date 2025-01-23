@@ -7,7 +7,6 @@ import Drawer from './components/Drawer';
 import Dashboard from './pages/Dashboard'; // Example page components
 import MoodLogs from './pages/MoodLogs/MoodLogs';
 import CalendarMood from './pages/Calendar/Calendar';
-import Settings from './pages/Settings';
 
 export default function App() {
   return (

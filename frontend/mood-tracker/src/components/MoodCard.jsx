@@ -13,6 +13,12 @@ export default function MoodCard({ mood, handleDelete }) {
     const index = Number(rating) - 1; // Adjust for 0-based index
     return moodLevels[index] || 'Unknown Mood'; // Fallback if rating is invalid
   };
+  console.log(mood)
+
+  const formatDate = (dateString) => {
+    const date = new Date(dateString);
+    return isNaN(date) ? 'Invalid Date' : date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+  };
 
   return (
     <Box
@@ -41,7 +47,7 @@ export default function MoodCard({ mood, handleDelete }) {
 
         <CardContent>
           <Typography level="title-md">
-            {new Date(mood.createdAt).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' })}
+            {formatDate(mood.createdAt)}
           </Typography>
           <Typography><strong>Rating: </strong>{getMoodLevel(mood.rating)}</Typography>
           <Typography>

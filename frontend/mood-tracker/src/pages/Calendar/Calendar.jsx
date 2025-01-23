@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import Calendar from 'react-calendar';
-import Button from '@mui/material/Button';  
+import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
 import 'react-calendar/dist/Calendar.css'; // Import the default styles
 import { Modal, Box, Typography } from '@mui/material'; // Modal for mood details
 import './CalendarMood.css'; // Custom CSS file to style the calendar
+import dummyMoodData from '../dummyMoodData.js'; // Import fallback data
 
 function CalendarMood() {
     const [moodData, setMoodData] = useState([]);
     const [selectedDate, setSelectedDate] = useState(new Date());
-    const [moodsForDate, setMoodsForDate] = useState([]);    
+    const [moodsForDate, setMoodsForDate] = useState([]);
     const [open, setOpen] = useState(false);
     const navigate = useNavigate();
 
@@ -19,9 +20,17 @@ function CalendarMood() {
             try {
                 const response = await fetch('http://localhost:4000/api/moods');
                 const json = await response.json();
-                setMoodData(json);
+
+                if (response.ok && json.length > 0) {
+                    setMoodData(json);
+                } else {
+                    console.warn('Using dummy data as fallback.');
+                    setMoodData(dummyMoodData);
+                }
             } catch (error) {
                 console.error('Error fetching mood data:', error);
+                console.warn('Using dummy data as fallback.');
+                setMoodData(dummyMoodData);
             }
         };
 
@@ -31,14 +40,14 @@ function CalendarMood() {
     // Handle selecting a date on the calendar
     const handleDateChange = (date) => {
         setSelectedDate(date);
-        
+
         // Find all moods for the selected date, ignoring the time part
         const moodsForSelectedDate = moodData.filter((mood) => {
-            const moodDate = new Date(mood.date).toLocaleDateString(); // Adjust this line if your API uses a different field for the date
+            const moodDate = new Date(mood.date).toLocaleDateString();
             return moodDate === date.toLocaleDateString();
         });
 
-        setMoodsForDate(moodsForSelectedDate); // Set all moods for the selected date
+        setMoodsForDate(moodsForSelectedDate);
         setOpen(true); // Open modal to show mood details
     };
 
@@ -50,7 +59,6 @@ function CalendarMood() {
     };
 
     // Define mood color mapping
-    // #8C8C8C', '#033E8C', '#EEECE2', '#F29325', '#F2CD13
     const moodColors = {
         1: '#8C8C8C',
         2: '#033E8C',
@@ -63,8 +71,8 @@ function CalendarMood() {
     const tileContent = ({ date, view }) => {
         if (view === 'month') {
             const moodsForDate = moodData.filter((mood) => {
-                const moodDate = new Date(mood.date).toLocaleDateString(); // Get mood date without time
-                return moodDate === date.toLocaleDateString(); // Compare dates
+                const moodDate = new Date(mood.date).toLocaleDateString();
+                return moodDate === date.toLocaleDateString();
             });
 
             return (
@@ -87,13 +95,13 @@ function CalendarMood() {
 
     return (
         <div>
-            {/* Calendar component with minDate prop to prevent future date selection */}
+            {/* Calendar component with maxDate prop to prevent future date selection */}
             <Calendar
                 onChange={handleDateChange}
                 value={selectedDate}
                 tileContent={tileContent}
                 className="custom-calendar"
-                maxDate={today} // Prevent selecting future dates
+                maxDate={today}
             />
 
             {/* Modal to display mood details */}
@@ -103,9 +111,8 @@ function CalendarMood() {
                     {moodsForDate.length > 0 ? (
                         moodsForDate.map((mood, index) => (
                             <div key={index}>
-                                <Typography sx={{ pt: 1}}><strong>Rating: </strong>{mood.rating}</Typography>
+                                <Typography sx={{ pt: 1 }}><strong>Rating: </strong>{mood.rating}</Typography>
                                 <Typography><strong>Emotions: </strong>{mood.emotions.join(', ')}</Typography>
-                                {/* <Typography><strong>Hours Slept: </strong>{mood.hoursSlept}</Typography> */}
                                 <Typography sx={{ borderBottom: '1px solid lightgray', pb: 1 }}><strong>Note: </strong>{mood.note}</Typography>
                             </div>
                         ))
