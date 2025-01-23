@@ -1,5 +1,7 @@
 # Mood Tracker Project
 
+https://nijiyamaharjan.github.io/mood-tracker/
+
 ## Project Overview
 The Mood Tracker is a web application that allows users to track their moods over time. Users can log their mood ratings, associated emotions and optional notes. The application provides a visual representation of mood trends, helping users reflect on their emotional well-being.
 
